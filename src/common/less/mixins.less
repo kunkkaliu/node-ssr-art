@@ -1,0 +1,50 @@
+@import './remcss.less';
+
+@boxShadowY: 2 / @baseFontSize * 1rem;
+@boxShadowBlur: 4 / @baseFontSize * 1rem;
+
+.ellipse {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lineNum(@num: 1) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -webkit-line-clamp: @num;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.font-medium {
+  font-family: PingFangSC-Medium;
+}
+
+.font-regular {
+  font-family: PingFangSC-Regular;
+}
+
+.font-light {
+  font-family: PingFangSC-Light;
+}
+
+.header-box-shadow {
+  box-shadow: 0 @boxShadowY @boxShadowBlur rgba(0, 0, 0, 0.06);
+}
+
+//border-bottom 1px的问题
+.border1px(@borderColor: #ddd) {
+  position: relative;
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    border-bottom: 1px solid @borderColor;
+    transform: scaleY(0.5);
+    transform-origin: 0 0;
+  }
+}

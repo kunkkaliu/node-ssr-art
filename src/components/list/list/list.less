@@ -1,0 +1,111 @@
+@import '../../../common/less/mixins.less';
+@import '../../../common/less/remcss.less';
+
+@backgroundSizeX: 209 / @baseFontSize * 1rem;
+
+.list-wrap {
+  width: 100%;
+  .px2rem(padding-top, 112);
+
+  .no-order {
+    text-align: center;
+    .font-light;
+    color: #716c6c;
+    .px2rem(font-size, 26);
+    .px2rem(padding-top, 50);
+  }
+
+  &.list-wrap-app {
+    .px2rem(padding-top, 24);
+  }
+
+  .list-box {
+    width: 100%;
+
+    .list-item {
+      margin: 0 auto;
+      position: relative;
+      background: #fff url(./Group6@3x.png) no-repeat top right;
+      background-size: @backgroundSizeX 100%;
+      .px2rem(border-radius, 8);
+      .px2rem(width, 686);
+      .px2rem(padding-top, 20);
+      .px2rem(padding-right, 32);
+      .px2rem(padding-bottom, 20);
+      .px2rem(padding-left, 32);
+      .px2rem(margin-bottom, 20);
+
+      .order-title {
+        .font-medium;
+        color: #303741;
+        .px2rem(font-size, 36);
+        .px2rem(line-height, 66);
+        .px2rem(margin-bottom, 5);
+        .ellipse;
+      }
+
+      .order-desc {
+        .font-light;
+        color: #5F6670;
+        .px2rem(height, 72);
+        .px2rem(padding-right, 48);
+        .px2rem(font-size, 26);
+        .px2rem(line-height, 36);
+        .px2rem(margin-bottom, 35);
+        .lineNum(2);
+      }
+
+      .dotted {
+        border-bottom: 1px dotted #D8DDE6;
+        .px2rem(margin-bottom, 20);
+      }
+
+      .order-status {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .font-regular;
+        .px2rem(font-size, 20);
+        .px2rem(line-height, 24);
+
+        .info {
+          color: #FF7147;
+          display: inline-block;
+        }
+
+        .btn-use {
+          color: #22AC38;
+          display: inline-block;
+          .px2rem(font-size, 22);
+
+          img {
+            .px2rem(margin-left, 4);
+            .px2rem(width, 18);
+            .px2rem(height, 18);
+          }
+        }
+      }
+
+      &.expire {
+        background: #fff url(./Group7@3x.png) no-repeat top right;
+        background-size: @backgroundSizeX 100%;
+        .order-title, .order-desc, .info, .btn-use {
+          color: #BEC5CF;
+        }
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  #load-more {
+    display: block;
+    margin: 0 auto;
+    .px2rem(margin-top, 20);
+    .px2rem(width, 240);
+    .px2rem(height, 96);
+    background-color: #22AC38;
+  }
+}

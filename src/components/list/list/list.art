@@ -1,0 +1,21 @@
+<% for(var item in records) { %>
+    <li class="list-item<% if(records[item].status !== 1) { %> expire<% } %>" id="<%= records[item].id %>">
+        <p class="order-title"><%= records[item].serviceName %></p>
+        <p class="order-desc"><%= records[item].serviceDesc %></p>
+        <p class="dotted"></p>
+        <p class="order-status">
+            <% if(records[item].serviceId === 11) { %>
+            <span class="info">购车后1.5年内且3万公里内可用</span>
+            <% } else { %>
+            <span class="info">剩余<%= records[item].remainTimes %>次&nbsp&nbsp有效期至<%= records[item].endDate %></span>
+            <% } %>
+            <% if(records[item].status === 2) { %>
+            <span class="btn-use">已使用</span>
+            <% } else if(records[item].status === 3) { %>
+            <span class="btn-use">已过期</span>
+            <% } else { %>
+            <span class="btn-use">使用<img src="./details_list_jump@3x.png" /></span>
+            <% } %>
+        </p>
+    </li>
+<% } %>

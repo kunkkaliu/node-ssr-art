@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    ${require("html-loader!components/common/head/head.html")}
+    <script>
+        ${require("html-loader!common/libs/flexible.js")}
+    </script>
+</head>
+
+<body>
+    <section class="page-status">
+        <div class="status-body">
+            <div class="status-tips">加载失败</div>
+            <button class="status-btn" onclick="javascript: window.location.reload();" type="button">点击刷新</button>
+        </div>
+    </section>
+</body>
+
+</html>

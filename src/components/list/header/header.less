@@ -1,0 +1,36 @@
+@import '../../../common/less/mixins.less';
+@import '../../../common/less/remcss.less';
+
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #fff;
+  width: 100%;
+  .px2rem(height, 88);
+  border-bottom: 1px solid #ededed;
+  z-index: 1001;
+  .header-box-shadow;
+
+  h1 {
+    .font-regular;
+    .ellipse;
+    font-weight: 500;
+    text-align: center;
+    color: #303741;
+    .px2rem(font-size, 32);
+    .px2rem(line-height, 88);
+  }
+
+  .back{
+    position: absolute;
+    top: 50%;
+    .px2rem(left, 28);
+    display: block;
+    background: url("./common_back@3x.png") no-repeat;
+    background-size: 100% 100%;
+    .px2rem(width, 20);
+    .px2rem(height, 34);
+    .px2rem(margin-top, -17);
+  }
+}

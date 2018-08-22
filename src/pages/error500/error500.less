@@ -1,0 +1,52 @@
+@import '../../common/less/remcss.less';
+
+@backgroundSizeX: 190 / @baseFontSize * 1rem;
+
+.page-status {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 101;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+
+  .status-body {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    .px2rem(margin-top, -172);
+
+    .status-tips {
+      .px2rem(font-size, 24);
+      .px2rem(line-height, 44);
+
+      &::before {
+        content: "";
+        display: block;
+        .px2rem(width, 190);
+        .px2rem(height, 190);
+        background: #fff url('./status_offline.gif') no-repeat;
+        background-size: @backgroundSizeX auto;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .status-btn {
+      .px2rem(width, 192);
+      .px2rem(height, 60);
+      background-color: #fff;
+      border: 1px solid #7d7d7d;
+      .px2rem(border-radius, 10);
+      color: #333;
+      .px2rem(font-size, 24);
+      .px2rem(line-height, 56);
+      text-align: center;
+      .px2rem(margin-top, 50);
+      padding: 0;
+    }
+  }
+}

@@ -1,0 +1,81 @@
+stages:
+    - prepare
+    - build
+    - rsync
+
+
+prepare-docker:
+  stage: prepare
+  only:
+      - tags
+  script:
+      - med prepare -n node-ssr-art-prepare
+
+build-code:
+  stage: build
+  only:
+      - tags
+  script:
+      - med build -n node-ssr-art-node-build
+
+rsync-release:
+  stage: rsync
+  only:
+      - tags
+  script:
+      - rm -rf build/
+      - med cp node-ssr-art-node-build:/data/www/node_ssr_art/dist/ build
+      - med cp node-ssr-art-node-build:/data/www/node_ssr_art/node_modules/ build
+      - med cp node-ssr-art-node-build:/data/www/node_ssr_art/package.json build
+      - med cp node-ssr-art-node-build:/data/www/node_ssr_art/pm2config.json build
+      - cd build
+      - tar -czvf $CI_PROJECT_NAME-$CI_COMMIT_TAG.tar.gz ./*
+      - rsync -avzp $CI_PROJECT_NAME-$CI_COMMIT_TAG.tar.gz earthworm.xxx.com::am/$CI_PROJECT_NAME/
+
+
+
+cloud-prepare:
+  stage: prepare
+  only:
+      - qa
+  script:
+      - med prepare -n node-ssr-art-prepare
+
+cloud-build:
+  stage: build
+  only:
+      - qa
+  script:
+      - med build -n node-ssr-art-node-build
+      - med build -n node-ssr-art-web-build
+
+cloud-push:
+  stage: rsync
+  only:
+      - qa
+  script:
+      - med update -n node-ssr-art-deploy
+
+
+
+cloud-online-prepare:
+  stage: prepare
+  only:
+      - online
+  script:
+      - med prepare -n node-ssr-art-prepare
+
+cloud-online-build:
+  stage: build
+  only:
+      - online
+  script:
+      - med build -n node-ssr-art-node-build
+      - med build -n node-ssr-art-web-build
+
+cloud-online-push:
+  stage: rsync
+  only:
+      - online
+  script:
+      - med push -n node-ssr-art-deploy
