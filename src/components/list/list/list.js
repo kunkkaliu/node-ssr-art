@@ -15,7 +15,7 @@ class List {
     }
 
     init = () => {
-        this.$container.find('li').click(this.toDetail);
+        this.$container.delegate('li', 'click', this.toDetail);
         this.$container.find('#load-more').click(this.loadMore);
     }
 

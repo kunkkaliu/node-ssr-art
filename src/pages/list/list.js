@@ -15,7 +15,9 @@ class Start {
     }
 
     init = () => {
-        FastClick.attach(document.body);
+        $(function () {
+            FastClick.attach(document.body);
+        });
         new List();
     }
 }

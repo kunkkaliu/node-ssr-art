@@ -6,6 +6,7 @@ var glob = require('glob');
 var webpack = require('webpack');
 var MiniCssExtractPlugin = require("mini-css-extract-plugin");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
+var InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
@@ -43,7 +44,7 @@ for (var key in htmls) {
         template: htmls[key],
         inject: true,
         favicon: src('favicon.ico'),
-        chunks: ['manifest', 'vendor', key],
+        chunks: ['runtime', 'vendor', key],
         minify: {
             collapseWhitespace: true,
             collapseInlineTagWhitespace: true,
@@ -58,6 +59,7 @@ for (var key in htmls) {
 
 module.exports = {
     entry: entries,
+    devtool: 'inline-source-map',
     target: 'web',
     output: {
         path: resolve('/dist/client'),
@@ -72,7 +74,7 @@ module.exports = {
             "window.$": "zepto",
             $: "zepto"
         })
-    ].concat(HtmlPlugin),
+    ].concat(HtmlPlugin, new InlineManifestWebpackPlugin('runtime')),
     resolve: {
         extensions: ['*', '.js'],
         alias: {

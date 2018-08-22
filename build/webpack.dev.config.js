@@ -13,7 +13,7 @@ Object.keys(base.entry).forEach(function (name) {
 });
 base.optimization = {
     runtimeChunk: {
-        name: "manifest"
+        name: "runtime"
     },
     splitChunks: {
         cacheGroups: {
