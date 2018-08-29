@@ -68,6 +68,14 @@ module.exports = {
             {
                 test: /\.(less|css)$/,
                 loader: 'ignore-loader'
+            },
+            {
+                test: /\.(png|jpe?g|gif)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10240,
+                    name: '/static/images/[name].[hash:8].[ext]'
+                }
             }
         ]
     },
