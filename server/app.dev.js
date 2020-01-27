@@ -5,13 +5,13 @@ require('babel-polyfill');
 require('babel-register')({
     ignore: /\/(node_modules)\//,
     presets: ['env', 'stage-0'],
-    plugins: []
+    plugins: [],
 });
 require('./ignore')();
 require('asset-require-hook')({
     extensions: ['jpg', 'jpeg', 'png', 'gif'],
     limit: 10240,
-    name: '/static/images/[name].[hash:8].[ext]'
+    name: '/static/images/[name].[hash:8].[ext]',
 });
 const path = require('path');
 const Koa = require('koa');
@@ -24,50 +24,55 @@ const koaRender = require('./middlewares/koa-render');
 const Logger = require('./middlewares/logger');
 const koaLogger = require('./middlewares/koa-logger');
 const routeNotFound = require('./middlewares/route-notfound');
+const config = require('../build/webpack.dev.config');
+const koaWebpackDevMiddleware = require('koa-webpack-dev-middleware');
+const koaWebpackHotMiddleware = require('koa-webpack-hot-middleware');
 
-global.logger = Logger({
+const logger = Logger({
     formatter(level, group, message) {
         const date = new Date();
-        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} [${level}] ${group}: ${message}`
-    }
+        return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} [${level}] ${group}: ${message}`;
+    },
 });
 const app = new Koa();
-const config = require('../build/webpack.dev.config');
+app.context.logger = logger;
 const compiler = webpack(config);
-let devMiddleWare;
-devMiddleWare = require('koa-webpack-dev-middleware')(compiler, {
+const devMiddleWare = koaWebpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
     stats: {
         colors: true,
         modules: false,
         children: false,
         chunks: false,
-        chunkModules: false
-    }
+        chunkModules: false,
+    },
 });
-const filePath = path.join(config.output.path, `views`);
+const basePath = path.join(config.output.path, 'views');
+koaRender(app, {
+    basePath,
+    devMiddleWare,
+});
 app.use(koaCompress({
     filter: function (content_type) {
-        return /text|javascript/i.test(content_type)
+        return /text|javascript/i.test(content_type);
     },
     threshold: 2048,
-    flush: require('zlib').Z_SYNC_FLUSH
+    flush: require('zlib').Z_SYNC_FLUSH,
 }));
 app.use(devMiddleWare);
-app.use(require('koa-webpack-hot-middleware')(compiler));
+app.use(koaWebpackHotMiddleware(compiler));
 app.use(koaParams());
 app.use(koaLogger());
-app.use(koaRender(filePath, devMiddleWare));
 app.use(router.routes()).use(router.allowedMethods());
 app.use(routeNotFound({
-    redirect: '/'
+    redirect: '/',
 }));
 
-app.listen(3000, function(){
+app.listen(3000, function () {
     bs.init({
         proxy: 'localhost:3000',
         files: ['./src/pages/**/*.html', './src/components/**/*.html'],
-        port: 8080
+        port: 8080,
     });
     logger.success('server', 'App (dev) is going to be running on port 8080 (by browsersync).');
 });

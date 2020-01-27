@@ -3,8 +3,8 @@
  */
 const Router = require('koa-router');
 const koaCache = require('../middlewares/koa-cache');
-const router = new Router();
 
+const router = new Router();
 const listRouter = require('./list');
 
 listRouter(router, koaCache);

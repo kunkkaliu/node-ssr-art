@@ -8,12 +8,12 @@ const requireContext = (base = '.', scanSubDirectories = false, regularExpressio
         fs.readdirSync(directory).forEach((file) => {
             const fullPath = path.resolve(directory, file);
             if (fs.statSync(fullPath).isDirectory()) {
-                if (scanSubDirectories){
+                if (scanSubDirectories) {
                     readDirectory(fullPath);
                 }
                 return;
             }
-            if (!regularExpression.test(fullPath)){
+            if (!regularExpression.test(fullPath)) {
                 return;
             }
             const filePath = fullPath.substr(basePath.length);
@@ -22,6 +22,7 @@ const requireContext = (base = '.', scanSubDirectories = false, regularExpressio
     }
     readDirectory(path.resolve(__dirname, base));
     function Module(file) {
+        // eslint-disable-next-line import/no-dynamic-require
         return require(path.join(basePath, file));
     }
     Module.keys = () => Object.keys(files);

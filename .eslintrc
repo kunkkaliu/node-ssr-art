@@ -92,6 +92,7 @@
   "globals": {
     "MOCK": false,
     "$": false,
-    "CODE_ENV": false
+    "CODE_ENV": false,
+    "logger": false
   }
 }
