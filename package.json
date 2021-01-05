@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "art-template": "^4.12.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "fastclick": "^1.0.6",
     "global": "^4.3.2",
